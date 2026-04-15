@@ -54,7 +54,7 @@ sudo apt-get install libpcap-dev
 Use `gcc` with the `-lpcap` flag to link the libpcap library:
 
 ```bash
-gcc watchdog.c -o watchdog -lpcap
+gcc Network_WatchDawg.c -o Network_WatchDawg -lpcap
 ```
 
 ---
@@ -62,7 +62,7 @@ gcc watchdog.c -o watchdog -lpcap
 ## ▶️ Running the Program
 
 ```bash
-sudo ./watchdog
+sudo ./Network_WatchDawg
 ```
 
 ---
