@@ -1,31 +1,99 @@
 # Network Watchdawg v1.0 📡🛡️
 
-A powerful, low-level Network Intrusion Detection System (NIDS) and Packet Analysis Suite built from scratch in C. 
+A powerful, low-level Network Intrusion Detection System (NIDS) and Packet Analysis Suite built from scratch in C.
 
-Network Watchdawg was developed to bridge the gap between high-level network tools and raw hardware communication. By interfacing directly with the Linux kernel, it provides a "ground-truth" view of every byte moving across the network interface.
+Network Watchdawg bridges the gap between high-level network tools and raw hardware communication. By interfacing directly with the Linux kernel, it provides a **ground-truth view of every byte** moving across the network interface.
+
+---
 
 ## 🚀 Overview
-Network Watchdawg operates in **Promiscuous Mode**, allowing it to capture and dissect traffic not just for the host machine, but for the entire network segment. It is a 2-in-1 tool designed for:
-1. **Passive Monitoring:** Acting as a Mini-IDS to flag specific signatures (like DNS queries).
+
+Network Watchdawg operates in **Promiscuous Mode**, allowing it to capture and dissect traffic not just for the host machine, but for the entire network segment.
+
+It is a 2-in-1 tool designed for:
+
+1. **Passive Monitoring:** Acting as a Mini-IDS to flag specific signatures (e.g., DNS queries, domain detection).
 2. **MITM Interception:** Serving as a decoding engine for Man-in-the-Middle traffic analysis.
 
+---
+
 ## ✨ Key Features
-* **Deep Packet Inspection (DPI):** Manually parses and extracts data from Ethernet, IP, TCP, and UDP headers.
-* **Signature-Based Detection:** Specialized module for targeted detection (e.g., DNS-based game signatures on Port 53).
-* **Kernel Filtering:** Implements Berkeley Packet Filters (BPF) to ensure high-performance sniffing with minimal CPU overhead.
-* **Live Identity Mapping:** Extracts Source/Destination MAC and IP pairings to map device fingerprints on a local network.
-* **Payload Extraction:** Attempts to decode binary payloads into human-readable ASCII text for real-time stream monitoring.
+
+* **Deep Packet Inspection (DPI):** Manually parses Ethernet, IP, TCP, and UDP headers.
+* **Signature-Based Detection:** Detects specific patterns like domain names (e.g., gaming websites) from packet payloads.
+* **Kernel-Level Filtering:** Uses Berkeley Packet Filters (BPF) for efficient packet capture.
+* **Live Identity Mapping:** Extracts Source/Destination MAC & IP addresses for device tracking.
+* **Payload Analysis:** Converts raw binary payloads into readable ASCII for real-time inspection.
+
+---
 
 ## 🛠️ Technical Stack
+
 * **Language:** C
 * **Core Library:** `libpcap`
 * **Environment:** Linux (Tested on Ubuntu/Kali)
-* **Protocols Handled:** Ethernet (Layer 2), IPv4 (Layer 3), TCP & UDP (Layer 4).
+* **Protocols:** Ethernet (L2), IPv4 (L3), TCP & UDP (L4)
+
+---
 
 ## 📥 Installation & Usage
 
 ### Prerequisites
-You must have the `libpcap` development headers installed on your Linux system:
+
+Install the required library:
+
 ```bash
 sudo apt-get update
 sudo apt-get install libpcap-dev
+```
+
+---
+
+## ⚙️ Compilation
+
+Use `gcc` with the `-lpcap` flag to link the libpcap library:
+
+```bash
+gcc watchdog.c -o watchdog -lpcap
+```
+
+---
+
+## ▶️ Running the Program
+
+```bash
+sudo ./watchdog
+```
+
+---
+
+## 🔐 Why `sudo` is Required?
+
+Network Watchdawg interacts directly with **network interfaces in promiscuous mode**, which is a **privileged operation** in Linux.
+
+Running with `sudo` is required because:
+
+* It allows access to **raw sockets**
+* It enables **packet sniffing at kernel level**
+* It allows switching the network interface to **promiscuous mode**
+* Normal users are restricted from capturing packets for **security reasons**
+
+Without root privileges, `libpcap` will fail to capture packets.
+
+---
+
+## ⚠️ Disclaimer
+
+This tool is intended strictly for:
+
+* Educational purposes
+* Authorized lab environments
+* Ethical security testing
+
+Do not use it on networks without proper permission.
+
+---
+
+## 🧠 Author Note
+
+This project reflects a deep understanding of how data flows at the packet level. It is not just a tool, but a step toward thinking like a **network security engineer**.
